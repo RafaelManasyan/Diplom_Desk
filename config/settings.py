@@ -7,7 +7,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-e+2yda0t&_46mfyt@xwj-)g)v%sgs4*n8*k1t6pgclp0fc9b8o'
+SECRET_KEY = os.getenv('')
 
 DEBUG = True
 
@@ -23,7 +23,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -92,7 +93,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+MEDIA_URL = "media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = []
+
+AUTH_USER_MODEL = 'users.User'

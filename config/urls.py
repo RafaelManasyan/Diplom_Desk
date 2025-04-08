@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
-from .swagger import schema_view  # если вынес в отдельный файл
+from .swagger import schema_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
 
     # Swagger и ReDoc
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
