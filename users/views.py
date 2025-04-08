@@ -55,7 +55,7 @@ class PasswordResetConfirmAPIView(APIView):
         serializer = SetNewPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.user  # получаем юзера из сериализатора
+        user = serializer.user
         new_password = serializer.validated_data['password']
 
         user.set_password(new_password)
