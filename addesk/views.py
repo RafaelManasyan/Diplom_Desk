@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
@@ -14,7 +14,7 @@ class AdvertListAPIView(ListAPIView):
     queryset = Advert.objects.all()
     permission_classes = [AllowAny]
     pagination_class = PageNumberPagination
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, ]
     filterset_class = AdvertFilter
 
 
@@ -23,8 +23,11 @@ class AdvertCreateAPIView(CreateAPIView):
     queryset = Advert.objects.all()
     permission_classes = [IsAuthenticated]
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
-class AdvertRetrieveUpdateDestroyAPIView(RetrieveAPIView):
+
+class AdvertRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = AdvertSerializer
     queryset = Advert.objects.all()
     permission_classes = [IsAuthorOrReadOnly]
@@ -40,6 +43,9 @@ class ReviewCreateAPIView(CreateAPIView):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
 class ReviewRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

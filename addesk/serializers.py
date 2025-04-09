@@ -6,10 +6,10 @@ from addesk.models import Advert, Review
 class AdvertSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advert
-        fields = "__all__"
+        exclude = ["author"]
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = "__all__"
+        exclude = ["author"]
