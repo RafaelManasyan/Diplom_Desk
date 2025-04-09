@@ -6,6 +6,7 @@ from .swagger import schema_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls', namespace='users')),
+    path('desk/', include('addesk.urls', namespace='desk')),
 
     # Swagger и ReDoc
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

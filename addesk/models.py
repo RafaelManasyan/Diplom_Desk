@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -5,7 +6,7 @@ class Advert(models.Model):
     title = models.CharField(verbose_name='название товара', max_length=255)
     price = models.IntegerField(verbose_name='цена товара', default=0)
     description = models.TextField(verbose_name='описание товара')
-    author = models.ForeignKey('User', verbose_name='автор объявления', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='автор объявления', on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name='время и дата создания объявления', auto_now_add=True)
 
     class Meta:
@@ -19,7 +20,7 @@ class Advert(models.Model):
 
 class Review(models.Model):
     text = models.TextField(verbose_name='текст отзыва', max_length=1000)
-    author = models.ForeignKey('User', verbose_name='автор отзыва', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='автор отзыва', on_delete=models.CASCADE)
     advert = models.ForeignKey('Advert', verbose_name='комментируемое объявление', on_delete=models.CASCADE)
     created_at = models.DateTimeField(verbose_name='время и дата создания отзыва', auto_now_add=True)
 

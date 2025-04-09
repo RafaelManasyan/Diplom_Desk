@@ -1,9 +1,5 @@
-import os.path
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-from config.settings import MEDIA_ROOT
 
 
 class User(AbstractUser):
