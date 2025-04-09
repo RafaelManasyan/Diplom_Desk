@@ -1,7 +1,9 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from addesk.filters import AdvertFilter
 from addesk.models import Advert, Review
 from addesk.permissions import IsAuthorOrReadOnly
 from addesk.serializers import AdvertSerializer, ReviewSerializer
@@ -12,6 +14,8 @@ class AdvertListAPIView(ListAPIView):
     queryset = Advert.objects.all()
     permission_classes = [AllowAny]
     pagination_class = PageNumberPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = AdvertFilter
 
 
 class AdvertCreateAPIView(CreateAPIView):
