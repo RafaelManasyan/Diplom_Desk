@@ -14,6 +14,10 @@ from users.serializers import UserSerializer, PasswordResetSerializer, SetNewPas
 
 
 class RegistrationAPIView(CreateAPIView):
+    """Регистрация нового пользователя с установкой пароля.
+
+    Пользователь создаётся с активным статусом.
+    """
     queryset = User.objects.all()
     permission_classes = [AllowAny]
     serializer_class = UserSerializer
@@ -25,6 +29,8 @@ class RegistrationAPIView(CreateAPIView):
 
 
 class ResetPasswordAPIView(generics.GenericAPIView):
+    """Запрос на сброс пароля. Отправляет письмо с ссылкой на восстановление."""
+
     serializer_class = PasswordResetSerializer
 
     def post(self, request):
@@ -46,11 +52,15 @@ class ResetPasswordAPIView(generics.GenericAPIView):
                 [email],
             )
 
-        return Response({"detail": "Если пользователь с таким email существует, отправлена ссылка на сброс пароля."},
-                        status=status.HTTP_200_OK)
+        return Response(
+            {"detail": "Если пользователь с таким email существует, отправлена ссылка на сброс пароля."},
+            status=status.HTTP_200_OK
+        )
 
 
 class PasswordResetConfirmAPIView(APIView):
+    """Подтверждение сброса пароля. Устанавливает новый пароль пользователю."""
+
     def post(self, request):
         serializer = SetNewPasswordSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -4,5 +4,6 @@ from users.models import User
 
 
 @admin.register(User)
-class AdvertAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
+    """Админка для модели пользователя."""
     list_display = ['email', 'role', 'first_name', 'last_name']

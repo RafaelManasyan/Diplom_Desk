@@ -3,6 +3,8 @@ from django.db import models
 
 
 class CustomUserManager(BaseUserManager):
+    """Менеджер пользователей, переопределяющий создание суперпользователя по email."""
+
     def create_superuser(self, email, password=None):
         if not email:
             raise ValueError('The Email field must be set')
@@ -16,6 +18,12 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    """Кастомная модель пользователя с аутентификацией по email.
+
+    Дополнительно содержит поля: имя, фамилия, телефон, аватар,
+    роль пользователя (пользователь или администратор).
+    """
+
     ROLE_CHOICES = (
         ('user', 'Пользователь'),
         ('admin', 'Администратор')
@@ -31,6 +39,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
+    objects = CustomUserManager()
 
     def __str__(self):
         return f"{self.email} ({self.role})"
